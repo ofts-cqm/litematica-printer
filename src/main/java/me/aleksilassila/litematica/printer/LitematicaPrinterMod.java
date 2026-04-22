@@ -23,6 +23,16 @@ public class LitematicaPrinterMod implements ModInitializer, ClientModInitialize
         OpenInventoryPacket.registerReceivePacket();
     }
 
+    public static void sendMessage(String message){
+        //#if MC > 260100
+        //$$ Minecraft.getInstance().player.sendSystemMessage(Component.literal(message).withColor(0x00FFFF));
+        //#else
+        //#if MC > 11802
+        Minecraft.getInstance().player.displayClientMessage(Component.literal("§b" + message), false);
+        //#endif
+        //#endif
+    }
+
     //#if MC >= 11902
     public static LiteralArgumentBuilder<FabricClientCommandSource> buildCommand(){
         LiteralArgumentBuilder<FabricClientCommandSource> builder = LiteralArgumentBuilder.literal("ofts-printer");
@@ -36,22 +46,14 @@ public class LitematicaPrinterMod implements ModInitializer, ClientModInitialize
 
     private static int onEnable(CommandContext<FabricClientCommandSource> ctx){
         assert Minecraft.getInstance().player != null;
-        //#if MC >= 260100
-        Minecraft.getInstance().player.sendSystemMessage(Component.literal("Printer Enabled!").withColor(0x00FFFF));
-        //#else
-        Minecraft.getInstance().player.displayClientMessage(Component.literal("Printer Enabled!").withColor(0x00FFFF), false);
-        //#endif
+        sendMessage("Printer Enabled!");
         Configs.Core.WORK_SWITCH.setBooleanValue(true);
         return 1;
     }
 
     private static int onDisable(CommandContext<FabricClientCommandSource> ctx){
         assert Minecraft.getInstance().player != null;
-        //#if MC >= 260100
-        Minecraft.getInstance().player.sendSystemMessage(Component.literal("Printer Disabled!").withColor(0x00FFFF));
-        //#else
-        Minecraft.getInstance().player.displayClientMessage(Component.literal("Printer Disabled!").withColor(0x00FFFF), false);
-        //#endif
+        sendMessage("Printer Disabled!");
         Configs.Core.WORK_SWITCH.setBooleanValue(false);
         return 1;
     }
