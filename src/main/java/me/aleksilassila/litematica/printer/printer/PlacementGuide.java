@@ -1026,7 +1026,7 @@ public class PlacementGuide {
                 boolean printBreakExtraBlock = Configs.Print.BREAK_EXTRA_BLOCK.getBooleanValue();
                 if (printBreakWrongBlock || printBreakExtraBlock) {
                     if (BreakUtils.canBreakBlock(ctx.blockPos)) {
-                        if (printBreakWrongBlock && !ctx.requiredState.isAir()) {
+                        if (printBreakWrongBlock && ctx.currentState.getBlock() instanceof CarpetBlock && !ctx.requiredState.isAir()) {
                             BreakUtils.INSTANCE.add(ctx);
                         } else if (printBreakExtraBlock && ctx.requiredState.isAir()) {
                             BreakUtils.INSTANCE.add(ctx);

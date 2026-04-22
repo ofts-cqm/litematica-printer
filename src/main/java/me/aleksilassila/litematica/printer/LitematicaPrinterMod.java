@@ -36,14 +36,22 @@ public class LitematicaPrinterMod implements ModInitializer, ClientModInitialize
 
     private static int onEnable(CommandContext<FabricClientCommandSource> ctx){
         assert Minecraft.getInstance().player != null;
-        Minecraft.getInstance().player.displayClientMessage(Component.literal("Printer Open"), false);
+        //#if MC >= 260100
+        Minecraft.getInstance().player.sendSystemMessage(Component.literal("Printer Enabled!").withColor(0x00FFFF));
+        //#else
+        Minecraft.getInstance().player.displayClientMessage(Component.literal("Printer Enabled!").withColor(0x00FFFF), false);
+        //#endif
         Configs.Core.WORK_SWITCH.setBooleanValue(true);
         return 1;
     }
 
     private static int onDisable(CommandContext<FabricClientCommandSource> ctx){
         assert Minecraft.getInstance().player != null;
-        Minecraft.getInstance().player.displayClientMessage(Component.literal("Printer Close"), false);
+        //#if MC >= 260100
+        Minecraft.getInstance().player.sendSystemMessage(Component.literal("Printer Disabled!").withColor(0x00FFFF));
+        //#else
+        Minecraft.getInstance().player.displayClientMessage(Component.literal("Printer Disabled!").withColor(0x00FFFF), false);
+        //#endif
         Configs.Core.WORK_SWITCH.setBooleanValue(false);
         return 1;
     }
